@@ -1,5 +1,10 @@
 <?php
 
+	require_once QA_INCLUDE_DIR.'qa-db-selects.php';
+	require_once QA_INCLUDE_DIR.'qa-app-format.php';
+	require_once QA_INCLUDE_DIR.'qa-app-q-list.php';
+	
+	
 	class qa_html_theme_layer extends qa_html_theme_base
 	{
 		/*
@@ -41,20 +46,25 @@
 		}
 		
 		function logged_in(){
-			$count = $this->notification_count();
-			$notifyclass = "qa-notification-none";
-			if($count>0){
-				$notifyclass = "qa-notification-new";
+			if(qa_get_logged_in_userid()){
+				$count = $this->notification_count();
+				$notifyclass = "qa-notification-none";
+				if($count>0){
+					$notifyclass = "qa-notification-new";
+				}
+				
+				$this->output('
+				<a href="'.qa_path_html('updates').'"><span class="qa-notification-counter '.$notifyclass.'">'.$count.'</span></a>
+				');
 			}
-			
-			$this->output('
-			<span class="qa-notification-counter '.$notifyclass.'">'.$count.'</span>
-			');
 			qa_html_theme_base::logged_in();
 		}
 		
 		function notification_count(){
-			return 0;
+			$questions=qa_db_select_with_pending(
+				qa_db_user_updates_selectspec(qa_get_logged_in_userid(), true, true)
+			);
+			return count(qa_any_sort_and_dedupe($questions));
 		}
 		
 		
