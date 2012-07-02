@@ -7,6 +7,7 @@
 	if(qa_opt("QA_NOTIFICATION_HAS_BEEN_SET_UP")!="true"){
 					
 		qa_db_query_sub("ALTER TABLE ^userevents ADD COLUMN lastview DATETIME");
+		qa_db_query_sub("UPDATE ^userevents SET lastview = NOW() WHERE 1");
 		
 		qa_opt("QA_NOTIFICATION_HAS_BEEN_SET_UP", "true");
 	}
