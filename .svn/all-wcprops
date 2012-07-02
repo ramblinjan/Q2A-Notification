@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/br_repos/!svn/ver/17215/qa/trunk/question2answer/qa-plugin/qa-notification
+END
+notification.css
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/br_repos/!svn/ver/17232/qa/trunk/question2answer/qa-plugin/qa-notification/notification.css
+END
+qa-notification-setup.php
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/br_repos/!svn/ver/17232/qa/trunk/question2answer/qa-plugin/qa-notification/qa-notification-setup.php
+END
+notification-layer.php
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/br_repos/!svn/ver/17232/qa/trunk/question2answer/qa-plugin/qa-notification/notification-layer.php
+END
+qa-plugin.php
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/br_repos/!svn/ver/17232/qa/trunk/question2answer/qa-plugin/qa-notification/qa-plugin.php
+END
+notification.js
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/br_repos/!svn/ver/17215/qa/trunk/question2answer/qa-plugin/qa-notification/notification.js
+END
+README
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/br_repos/!svn/ver/17215/qa/trunk/question2answer/qa-plugin/qa-notification/README
+END
