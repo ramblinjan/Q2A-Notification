@@ -21,3 +21,19 @@ a:visited .qa-notification-new{
 a:visited .qa-notification-none{
 	color: black;
 }
+
+.qa-notification-dialog{
+	/*display: none;
+	z-index:10000;
+ 
+    background-color:#fff;
+ 
+    width:675px;
+    min-height:200px;
+    border:1px solid #666;*/
+	display: none;
+   
+	z-index: 10000;
+	position: absolute;
+	background-color:#ddd;
+}
