@@ -61,7 +61,8 @@
 					$qnum = qa_request_part("0");
 					qa_db_query_sub("UPDATE ^userevents SET lastview = NOW() WHERE questionid = $qnum AND userid = ".qa_get_logged_in_userid());
 				}
-				$questions = qa_db_read_all_assoc(qa_db_query_sub("SELECT DISTINCT questionid FROM ^userevents WHERE lastview < updated OR lastview IS NULL"));
+				$questions = qa_db_read_all_assoc(qa_db_query_sub("SELECT DISTINCT(questionid), lastpostid FROM ^userevents WHERE lastview < updated OR lastview IS NULL"));
+
 				
 				$count =  count($questions);
 				
@@ -76,10 +77,23 @@
 				$this->output('<div class="qa-notification-dialog">');
 					foreach($questions as $question){
 						$q = qa_post_get_full($question["questionid"]);
+						$post = qa_post_get_full($question["lastpostid"]);
+						$type = "";
+						if($post["type"]=="A"){
+							$type = "answer";
+						}else if($post["type"]=="C"){
+							$type = "comment";
+						}
+						if($post["userid"]==NULL){
+							$user = "anonymous";
+						}else{
+							$user = qa_userids_to_handles(array($post["userid"]));
+							$user = $user[$post["userid"]];
+						}
 						$this->output('<div class="qa-notification-dialog-entry">',
 											'<a href="'.qa_q_path($question["questionid"], $q["title"]).'">'.$q["title"].'</a>',
-										'</div
-										>');
+											'<div>New '.$type.' by '.$user.': "'.substr($post["content"], 0, 100).'"</div>',
+										'</div>');
 					}
 				$this->output('</div>');
 			}

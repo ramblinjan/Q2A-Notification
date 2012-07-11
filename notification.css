@@ -32,8 +32,10 @@ a:visited .qa-notification-none{
     min-height:200px;
     border:1px solid #666;*/
 	display: none;
-   
 	z-index: 10000;
 	position: absolute;
 	background-color:#ddd;
+	width: 350px;
+	height: 150px;
+	overflow: scroll;
 }

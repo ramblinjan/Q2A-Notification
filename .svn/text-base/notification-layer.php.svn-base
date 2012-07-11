@@ -3,10 +3,12 @@
 	require_once QA_INCLUDE_DIR.'qa-db-selects.php';
 	require_once QA_INCLUDE_DIR.'qa-app-format.php';
 	require_once QA_INCLUDE_DIR.'qa-app-q-list.php';
+	require_once QA_INCLUDE_DIR.'qa-app-posts.php';
 	
 	if(qa_opt("QA_NOTIFICATION_HAS_BEEN_SET_UP")!="true"){
 					
 		qa_db_query_sub("ALTER TABLE ^userevents ADD COLUMN lastview DATETIME");
+		qa_db_query_sub("UPDATE ^userevents SET lastview = NOW() WHERE 1");
 		
 		qa_opt("QA_NOTIFICATION_HAS_BEEN_SET_UP", "true");
 	}
@@ -55,31 +57,62 @@
 		
 		function logged_in(){
 			if(qa_get_logged_in_userid()){
-				$count = $this->notification_count();
+				if($this->template=="question"){
+					$qnum = qa_request_part("0");
+					qa_db_query_sub("UPDATE ^userevents SET lastview = NOW() WHERE questionid = $qnum AND userid = ".qa_get_logged_in_userid());
+				}
+				$questions = qa_db_read_all_assoc(qa_db_query_sub("SELECT DISTINCT(questionid), lastpostid FROM ^userevents WHERE lastview < updated OR lastview IS NULL"));
+
+				
+				$count =  count($questions);
+				
 				$notifyclass = "qa-notification-none";
 				if($count>0){
 					$notifyclass = "qa-notification-new";
 				}
 				
 				$this->output('
-				<a href="'.qa_path_html('updates').'"><span class="qa-notification-counter '.$notifyclass.'">'.$count.'</span></a>
+				<span class="qa-notification-counter '.$notifyclass.'">'.$count.'</span>
 				');
+				$this->output('<div class="qa-notification-dialog">');
+					foreach($questions as $question){
+						$q = qa_post_get_full($question["questionid"]);
+						$post = qa_post_get_full($question["lastpostid"]);
+						$type = "";
+						if($post["type"]=="A"){
+							$type = "answer";
+						}else if($post["type"]=="C"){
+							$type = "comment";
+						}
+						if($post["userid"]==NULL){
+							$user = "anonymous";
+						}else{
+							$user = qa_userids_to_handles(array($post["userid"]));
+							$user = $user[$post["userid"]];
+						}
+						$this->output('<div class="qa-notification-dialog-entry">',
+											'<a href="'.qa_q_path($question["questionid"], $q["title"]).'">'.$q["title"].'</a>',
+											'<div>New '.$type.' by '.$user.': "'.substr($post["content"], 0, 100).'"</div>',
+										'</div>');
+					}
+				$this->output('</div>');
 			}
 			qa_html_theme_base::logged_in();
 		}
 		
-		function notification_count(){
-			
-			//qa_db_query_sub("UPDATE TABLE ^userevents ADD COLUMN lastview DATETIME");
+		/*
+		 * No longer needed for now
+		 function notification_count(){
 			if($this->template=="question"){
 				$qnum = qa_request_part("0");
 				qa_db_query_sub("UPDATE ^userevents SET lastview = NOW() WHERE questionid = $qnum AND userid = ".qa_get_logged_in_userid());
 			}
 			
+			
 			$questions = qa_db_read_all_assoc(qa_db_query_sub("SELECT DISTINCT questionid FROM ^userevents WHERE lastview < updated OR lastview IS NULL"));
 			
 			return count($questions);
-		}
+		}*/
 		
 		
 	}

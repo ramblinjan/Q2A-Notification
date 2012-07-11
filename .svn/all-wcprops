@@ -7,7 +7,7 @@ notification.css
 K 25
 svn:wc:ra_dav:version-url
 V 96
-/svn/br_repos/!svn/ver/17232/qa/trunk/question2answer/qa-plugin/qa-notification/notification.css
+/svn/br_repos/!svn/ver/17290/qa/trunk/question2answer/qa-plugin/qa-notification/notification.css
 END
 qa-notification-setup.php
 K 25
@@ -19,7 +19,7 @@ notification-layer.php
 K 25
 svn:wc:ra_dav:version-url
 V 102
-/svn/br_repos/!svn/ver/17232/qa/trunk/question2answer/qa-plugin/qa-notification/notification-layer.php
+/svn/br_repos/!svn/ver/17291/qa/trunk/question2answer/qa-plugin/qa-notification/notification-layer.php
 END
 qa-plugin.php
 K 25
@@ -31,7 +31,7 @@ notification.js
 K 25
 svn:wc:ra_dav:version-url
 V 95
-/svn/br_repos/!svn/ver/17215/qa/trunk/question2answer/qa-plugin/qa-notification/notification.js
+/svn/br_repos/!svn/ver/17290/qa/trunk/question2answer/qa-plugin/qa-notification/notification.js
 END
 README
 K 25
